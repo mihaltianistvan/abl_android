@@ -118,7 +118,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 //parse json data
 
 
-
+// valami 
                 break;
             case 2:
                 ft.replace(R.id.mainContnet, b);
