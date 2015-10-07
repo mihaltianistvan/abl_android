@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linearLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Street"
+            android:layout_gravity="left"
+            android:background="@android:color/holo_red_light"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="456546546"
+            android:layout_gravity="right"
+            android:background="@android:color/holo_red_light"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="456546546"
+            android:layout_gravity="right"
+            android:background="@android:color/holo_red_light"
+            android:textColor="@android:color/white"/>
+
+
+    </LinearLayout>
+
+
+
+    <ListView
+            android:id="@+id/result_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/table_layout_result">
+        </ListView>
+
+</LinearLayout>

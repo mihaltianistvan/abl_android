@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ABL_League</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="openclose">close</string>
+    <string name="open">open</string>
+</resources>
