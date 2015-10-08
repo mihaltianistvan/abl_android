@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_weight="2"
-        android:text="Street"
+        android:text="Team A"
         android:background="@drawable/border_white"
         android:textColor="@android:color/white" />
 

@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -38,7 +39,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     private ListView resultView;
     FragmentABLRounds a = new FragmentABLRounds();
     FragmentABLResult b = new FragmentABLResult();
-
+    FragmentABLMvp c = new FragmentABLMvp();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +64,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 //        };
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-     //   drawerLayout.setDrawerListener(drawerListener);
-
+        //   drawerLayout.setDrawerListener(drawerListener);
 
 
     }
@@ -104,11 +104,11 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
     }
 
-    public void selectItem(int position){
+    public void selectItem(int position) {
         listAblaLeft.setItemChecked(position, true);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-        switch(position){
+        switch (position) {
 
             case 0:
                 ft.replace(R.id.mainContnet, a);
@@ -118,7 +118,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 //parse json data
 
 
-
                 break;
             case 2:
                 ft.replace(R.id.mainContnet, b);
@@ -126,10 +125,14 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 ft.addToBackStack(null);
                 ft.commit();
                 break;
+            case 3:
+                ft.replace(R.id.mainContnet, c);
+                // ft.add(R.id.mainContnet, fb);
+                ft.addToBackStack(null);
+                ft.commit();
+                break;
 
         }
-
-
 
 
     }
