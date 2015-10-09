@@ -1,9 +1,11 @@
 package ro.abla.www.abl_league;
 
 import android.content.Context;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -16,8 +18,9 @@ public class ABLStandingsAdapter extends BaseAdapter {
 
     ArrayList<ABLAStandings> arr;
     Context context;
+    Display display;
 
-    public ABLStandingsAdapter(Context context,ArrayList<ABLAStandings> arr){
+    public ABLStandingsAdapter(Context context, ArrayList<ABLAStandings> arr) {
         this.context = context;
         this.arr = arr;
 
@@ -40,23 +43,47 @@ public class ABLStandingsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View row=null;
-        TextView teamTXT, pointsTXT;
+        View row = null;
+        TextView teamTXT, pointsTXT, gamesTXT, winTXT, looseTXT,pointsmadeTXT,pointsgotTXT, pointsdifTXT;
 
-        if(convertView == null) {
+        if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(R.layout.abl_row_rounds_layout, parent, false);
+            row = inflater.inflate(R.layout.abl_row_table_layout, parent, false);
+        } else {
+            row = convertView;
         }
-        else {
-            row=convertView;
-        }
-        teamTXT = (TextView) row.findViewById(R.id.team);
-        pointsTXT = (TextView) row.findViewById(R.id.points);
-        //whereRound =(TextView) row.findViewById(R.id.roundgameWhere);
 
-        teamTXT.setText(arr.get(position).getTeamABL());
-        pointsTXT.setText("Time: " + arr.get(position).getPoints());
-        //whereRound.setText("Place: " + arr.get(position).getWhere());
+
+        display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        int orient = display.getOrientation();
+
+
+        teamTXT = (TextView) row.findViewById(R.id.abl_teamname_table_tv);
+        pointsTXT = (TextView) row.findViewById(R.id.abl_points_table_tv);
+        gamesTXT = (TextView) row.findViewById(R.id.abl_gamse_table_tv);
+        winTXT = (TextView) row.findViewById(R.id.abl_wins_table_tv);
+        looseTXT = (TextView) row.findViewById(R.id.abl_loose_table_tv);
+        pointsmadeTXT = (TextView) row.findViewById(R.id.abl_pointsmade_table_tv);
+        pointsgotTXT = (TextView) row.findViewById(R.id.abl_got_table_tv);
+        pointsdifTXT = (TextView) row.findViewById(R.id.abl_pointsdiff_table_tv);
+
+
+        if (orient == 0) {
+            teamTXT.setText(arr.get(position).getTeamABL());
+            pointsTXT.setText(arr.get(position).getPoints());
+            gamesTXT.setText(arr.get(position).getPlayedGames());
+            winTXT.setText(arr.get(position).getWinnGame());
+            looseTXT.setText(arr.get(position).getLooseGame());
+        } else {
+            teamTXT.setText(arr.get(position).getTeamABL());
+            pointsTXT.setText(arr.get(position).getPoints());
+            gamesTXT.setText(arr.get(position).getPlayedGames());
+            winTXT.setText(arr.get(position).getWinnGame());
+            looseTXT.setText(arr.get(position).getLooseGame());
+            pointsmadeTXT.setText(arr.get(position).getMadeBaskets());
+            pointsgotTXT.setText(arr.get(position).getGotPoints());
+            pointsdifTXT.setText(arr.get(position).getPointDiff());
+        }
 
         return row;
     }

@@ -11,12 +11,22 @@ public class ABLAStandings {
     private String winnGame;
     private String looseGame;
     private String pointDiff;
+    private String madeBaskets;
 
 
     public ABLAStandings(String teamABL, String points, String playedGames, String
-            winnGame, String looseGame, String pointDiff) {
+            winnGame, String looseGame, String pointDiff, String madeBaskets) {
         this.teamABL = teamABL;
         this.points = points;
+        this.playedGames = playedGames;
+        this.winnGame = winnGame;
+        this.looseGame = looseGame;
+        this.pointDiff = pointDiff;
+        this.madeBaskets = madeBaskets;
+    }
+
+    public String getMadeBaskets() {
+        return madeBaskets;
     }
 
     public String getPoints() {
@@ -41,5 +51,11 @@ public class ABLAStandings {
 
     public String getWinnGame() {
         return winnGame;
+    }
+
+    public String getGotPoints() {
+        int res =  Integer.parseInt(getMadeBaskets()) - Integer.parseInt(getPointDiff());
+        return String.valueOf(res);
+
     }
 }
