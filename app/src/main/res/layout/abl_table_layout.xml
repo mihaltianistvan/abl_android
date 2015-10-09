@@ -1,35 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-
-    <TableLayout
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ListView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:stretchColumns="*"
-        android:shrinkColumns="1,2">
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-        <TextView
-            android:text="Large Text"
-            android:id="@+id/title"/>
-        <TextView
-            android:text="Large Text"/>
-        <TextView
-            android:text="Large Text"/>
-    </TableRow>
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-            <TextView
-                android:text="Large Text"
-                android:id="@+id/team"/>
-            <TextView
-                android:text="Large"
-                android:id="@+id/points"/>
-            <TextView
-                android:text="Large Text"/>
-        </TableRow>
-    </TableLayout>
+        android:layout_height="wrap_content"
+        android:id="@+id/abla_table_listview"
+        android:layout_weight="1" />
 </LinearLayout>

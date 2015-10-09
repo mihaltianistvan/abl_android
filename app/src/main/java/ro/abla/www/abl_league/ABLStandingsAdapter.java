@@ -13,8 +13,7 @@ import java.util.ArrayList;
  * Created by User on 10/6/2015.
  */
 public class ABLStandingsAdapter extends BaseAdapter {
-    String aa;
-    String bb;
+
     ArrayList<ABLAStandings> arr;
     Context context;
 

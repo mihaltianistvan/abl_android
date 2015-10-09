@@ -33,7 +33,7 @@ public class FragmentABLStandings extends Fragment {
         View finalView = inflater.inflate(R.layout.abl_table_layout,container,false);
 
         try {
-            String result = analyzeJson.getData("http://abla.ro/androidStandings.php"); //getData("http://abla.ro/androidmysql.php");
+            String result = analyzeJson.getData("http://abla.ro/androidTableQuery.php"); //getData("http://abla.ro/androidmysql.php");
             ArrayList<ABLAStandings> s = new ArrayList<ABLAStandings>();
             jArray = new JSONArray(result);
             for(int i=0; i<jArray.length();i++){
