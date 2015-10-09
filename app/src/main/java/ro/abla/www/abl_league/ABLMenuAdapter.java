@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 /**
@@ -19,7 +21,7 @@ public class ABLMenuAdapter extends BaseAdapter {
 
     private Context cont;
     private String[] menuArray;
-    private int[] menuImages = {R.drawable.rounds, R.drawable.whistle, R.drawable.standings, R.drawable.mvp};
+    private int[] menuImages = {R.drawable.rounds, R.drawable.whistle, R.drawable.standings, R.drawable.mvp,R.drawable.mvp};
 
     public ABLMenuAdapter(Context context) {
         this.cont = context;
@@ -45,6 +47,7 @@ public class ABLMenuAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View finalDrawerRow;
+
         TextView menuText;
         ImageView menuIcon;
 
@@ -58,11 +61,13 @@ public class ABLMenuAdapter extends BaseAdapter {
         }
 
         // find elements on inflated layout for future use
+
         menuText = (TextView) finalDrawerRow.findViewById(R.id.menuText);
         menuIcon = (ImageView) finalDrawerRow.findViewById(R.id.menuIcon);
 
         menuText.setText(menuArray[position]);
         menuIcon.setImageResource(menuImages[position]);
+
 
         return finalDrawerRow;
     }

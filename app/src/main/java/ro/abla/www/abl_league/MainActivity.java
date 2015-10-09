@@ -8,6 +8,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -24,6 +25,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,11 +46,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     FragmentABLMvp c = new FragmentABLMvp();
     //ABLStoreSeason ablStoreSeason = new ABLStoreSeason();
     FragmentABLStandings fragmentABLStandings = new FragmentABLStandings();
-
+    String abc;
     private JSONArray jArray;
     Spinner spinner;
     AnalyzeJson analyzeJson = new AnalyzeJson();
-
+    ABLSeasonAdapter seasonAdapter;
+    SpinnerAdapter adapt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
         // find the list view in XML layout
         listAblaLeft = (ListView) findViewById(R.id.abla_drawer_list);
+        listAblaLeft.setAdapter(new ABLMenuAdapter(this));
         listAblaLeft.setAdapter(new ABLMenuAdapter(this));
         listAblaLeft.setOnItemClickListener(this);
 //        drawerListener = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.mvp, R.string.open, R.string.open) {
@@ -89,14 +93,16 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
      //   staticSpinner.setAdapter(staticAdapter);
         try {
             String result = analyzeJson.getData("http://abla.ro/testelek.php");
-            ArrayList<ABLStoreSeason> s = new ArrayList<ABLStoreSeason>();
+            ArrayList<ABLStoreSeason> s =  new ArrayList<ABLStoreSeason>();
             jArray = new JSONArray(result);
             for (int i = 0; i < jArray.length(); i++) {
                 JSONObject json = jArray.getJSONObject(i);
 
-                s.add(new ABLStoreSeason(json.getString("seassonname"), json.getString("id")));
+                s.add(new ABLStoreSeason(json.getString("seasonname"), json.getString("id")));
                 spinner = (Spinner) findViewById(R.id.abl_season_spinner);
-                spinner.setAdapter(new ABLSeasonAdapter(this, s));
+                seasonAdapter = new ABLSeasonAdapter(this, s);
+
+                spinner.setAdapter(seasonAdapter);
 
             }
 
@@ -117,19 +123,24 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 //
 //        dynamicSpinner.setAdapter(adapter);
 
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view,
-//                                       int position, long id) {
-//                //ablStoreSeason.setSeasonID((String) parent.getItemAtPosition(position));
-//                Log.v("item", (String) parent.getItemAtPosition(position));
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//                // TODO Auto-generated method stub
-//            }
-//        });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+
+                Spinner mySpinner=(Spinner) findViewById(R.id.abl_season_spinner);
+                ABLStoreSeason item = (ABLStoreSeason) parent.getItemAtPosition(position);
+
+                TextView text = (TextView) findViewById(R.id.lofasz);
+                text.setText(item.getSeasonName());
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+        });
        // - See more at: http://www.ahotbrew.com/android-dropdown-spinner-example/#sthash.GRQ0x8QK.dpuf
     }
 
@@ -176,6 +187,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
             case 0:
 
+            //    Toast.makeText(this,abc,Toast.LENGTH_LONG);
                 ft.replace(R.id.mainContnet, a);
 
                 // ft.add(R.id.mainContnet, fb);

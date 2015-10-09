@@ -15,26 +15,48 @@
         <!--android:layout_height="wrap_content"-->
         <!--android:layout_marginBottom="20dp"-->
         <!--android:layout_marginTop="20dp" />-->
-        <Spinner
-            android:id="@+id/abl_season_spinner"
+
+        <TextView
+
             android:layout_width="match_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:text="Team B"
+            android:layout_gravity="center"
+            android:id="@+id/lofasz"
             android:background="@android:color/holo_red_light"
-            android:spinnerMode="dropdown" />
+            android:textColor="@android:color/white"/>
+
 
     </FrameLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:orientation="vertical"
+        android:background="#0E0F0F">
     <ListView
 
         android:id="@+id/abla_drawer_list"
         android:layout_width="240dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:dividerHeight="1dp"
         android:divider="@android:color/white"
         android:listSelector="@android:color/holo_red_light"
         android:background="#0E0F0F"
         >
+
     </ListView>
 
+
+        <Spinner
+            android:layout_gravity="left"
+            android:layout_width="240dp"
+            android:id="@+id/abl_season_spinner"
+
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_red_light"
+            android:spinnerMode="dropdown" />
+    </LinearLayout>
 </android.support.v4.widget.DrawerLayout>
