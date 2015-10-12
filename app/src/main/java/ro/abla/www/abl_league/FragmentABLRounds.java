@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.support.v4.app.*;
-import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -24,7 +22,6 @@ public class FragmentABLRounds extends Fragment {
     private String queryParams;
     ListView resultView;
     AnalyzeJson analyzeJson = new AnalyzeJson();
-    ABLRoundAdapter adapter;
 
     public FragmentABLRounds() {
 
@@ -44,24 +41,18 @@ public class FragmentABLRounds extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View finalView = inflater.inflate(R.layout.abl_rounds_layout, container, false);
-     //   Toast.makeText(this.getActivity(),"FRAGMENT: "+getQueryParamsSeasonRound,Toast.LENGTH_LONG);
-        try {
+        View finalView = inflater.inflate(R.layout.abl_rounds_layout,container,false);
 
+        try {
             String result = analyzeJson.getData("http://abla.ro/androidmysql.php?seasonID="+queryParamsSeasonId+"&etapID="+getQueryParamsSeasonRound); //getData("http://abla.ro/androidmysql.php");
             ArrayList<ABLARounds> s = new ArrayList<ABLARounds>();
-//Toast.makeText(getActivity(),"FRAGMENT: "+getQueryParamsSeasonRound,Toast.LENGTH_LONG);
             jArray = new JSONArray(result);
-            //resultView.invalidateViews();
         for(int i=0; i<jArray.length();i++){
             JSONObject json = jArray.getJSONObject(i);
-            s.add(new ABLARounds(json.getString("teamname1"), json.getString("teamname2"), json.getString("mwhen"), json.getString("mwhere")));
+
+            s.add(new ABLARounds(json.getString("teamname1"),json.getString("teamname2"),json.getString("mwhen"),json.getString("mwhere")));
             resultView = (ListView) finalView.findViewById(R.id.abl_rounds_list);
-            adapter = new ABLRoundAdapter(this.getActivity(), s);
-
-            adapter.notifyDataSetChanged();
-            resultView.setAdapter(adapter);
-
+            resultView.setAdapter(new ABLRoundAdapter(this.getActivity(),s));
 
         }
 

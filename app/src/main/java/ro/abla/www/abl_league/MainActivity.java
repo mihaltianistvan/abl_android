@@ -34,27 +34,27 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.TooManyListenersException;
 
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
 
     // used vars
     private DrawerLayout drawerLayout;
-    private ListView listAblaLeft, listAblaMainSeason;
+    private ListView listAblaLeft,listAblaMainSeason;
     private ActionBarDrawerToggle drawerListener;
     private ListView resultView;
-    private String seasonIDParam, roundIDParam;
     FragmentABLRounds fragmentABLRounds = new FragmentABLRounds();
     FragmentABLResult fragmentABLResult = new FragmentABLResult();
     FragmentABLMvp fragmentABLMvp = new FragmentABLMvp();
+    //ABLStoreSeason ablStoreSeason = new ABLStoreSeason();
     FragmentABLStandings fragmentABLStandings = new FragmentABLStandings();
+    String abc;
     private JSONArray jArray;
-    Spinner spinner, spinner1;
+    Spinner spinner,spinner1;
     AnalyzeJson analyzeJson = new AnalyzeJson();
     ABLSeasonAdapter seasonAdapter;
     ABLRoundSpinnerAdapter roundSpinnerAdapter;
-    ArrayList<ABLARoundsSpinnerStore> ss = new ArrayList<ABLARoundsSpinnerStore>();
-
+    ArrayList<ABLARoundsSpinnerStore> ss =  new ArrayList<ABLARoundsSpinnerStore>();
+    SpinnerAdapter adapt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,11 +79,24 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 //        };
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        //   drawerLayout.setDrawerListener(drawerListener);
 
-        // download from www.abla.ro info about seasonname and season id put them in spinner
+       // Spinner staticSpinner = (Spinner) findViewById(R.id.static_spinner);
+
+        // Create an ArrayAdapter using the string array and a default spinner
+       // ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter
+        //        .createFromResource(this, R.array.brew_array,
+         //               android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+      //  staticAdapter
+        //        .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+     //   staticSpinner.setAdapter(staticAdapter);
         try {
             String result = analyzeJson.getData("http://abla.ro/testelek.php");
-            ArrayList<ABLStoreSeason> s = new ArrayList<ABLStoreSeason>();
+            ArrayList<ABLStoreSeason> s =  new ArrayList<ABLStoreSeason>();
             jArray = new JSONArray(result);
             for (int i = 0; i < jArray.length(); i++) {
                 JSONObject json = jArray.getJSONObject(i);
@@ -91,8 +104,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 s.add(new ABLStoreSeason(json.getString("seasonname"), json.getString("id")));
                 spinner = (Spinner) findViewById(R.id.abl_season_spinner);
                 seasonAdapter = new ABLSeasonAdapter(this, s);
+//spinner1.setVisibility(View.GONE);
                 spinner.setAdapter(seasonAdapter);
-
 
             }
 
@@ -101,42 +114,41 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             Log.e("log_tag", "Error Parsing Data " + e.toString());
         }
 
-        // set a default value for rounds
-        getRoundsInSpinner("0");
 
-        // set the onc lick listener for seasonspinner
+
+
+
+
+
+        //ABLDownloadSeasonInfo ablDownloadSeasonInfo = new ABLDownloadSeasonInfo();
+//        Spinner dynamicSpinner = (Spinner) findViewById(R.id.dynamic_spinner);
+//
+//        String[] items = new String[] { "Chai Latte", "Green Tea", "Black Tea" };
+//
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+//                android.R.layout.simple_spinner_item, items);
+//
+//        dynamicSpinner.setAdapter(adapter);
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
 
-                Spinner mySpinner = (Spinner) findViewById(R.id.abl_season_spinner);
-                ABLStoreSeason item = (ABLStoreSeason) parent.getItemAtPosition(position);
-
-                // TextView text = (TextView) findViewById(R.id.testtext);
-                //text.setText(item.getEtap());
-                seasonIDParam = item.getSeasonID();
-                getRoundsInSpinner(item.getSeasonID());
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // TODO Auto-generated method stub
-
-            }
-        });
-
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-
+<<<<<<< HEAD
 //
                 ABLARoundsSpinnerStore item = (ABLARoundsSpinnerStore) parent.getItemAtPosition(position);
                 roundIDParam = item.getRoundID();
+=======
+                Spinner mySpinner=(Spinner) findViewById(R.id.abl_season_spinner);
+                ABLStoreSeason item = (ABLStoreSeason) parent.getItemAtPosition(position);
 
+                TextView text = (TextView) findViewById(R.id.testtext);
+                text.setText(item.getEtap());
+>>>>>>> parent of 05c53a3... 121015 - 17:36
+
+              something(item.getSeasonID());
+                fragmentABLRounds.setQueryParams(item.getSeasonID(), item.getEtap());
 
             }
 
@@ -146,27 +158,25 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
             }
         });
-
-
+       // - See more at: http://www.ahotbrew.com/android-dropdown-spinner-example/#sthash.GRQ0x8QK.dpuf
     }
 
-    // download rounds from abla from a specified season
-    public void getRoundsInSpinner(String seasonID) {
+    public void something(String seasonID){
         try {
-            ss.clear();
-            Toast.makeText(this, seasonID, Toast.LENGTH_LONG).show();
-            String result = analyzeJson.getData("http://abla.ro/androidRoundsQuery.php?seasonid=" + seasonID);
-            ArrayList<ABLARoundsSpinnerStore> s = new ArrayList<ABLARoundsSpinnerStore>();
+            roundSpinnerAdapter
+            Toast.makeText(this,seasonID,Toast.LENGTH_LONG).show();
+            String result = analyzeJson.getData("http://abla.ro/androidRoundsQuery.php?seasonid="+seasonID);
+            ArrayList<ABLARoundsSpinnerStore> s =  new ArrayList<ABLARoundsSpinnerStore>();
             jArray = new JSONArray(result);
             for (int i = 0; i < jArray.length(); i++) {
                 JSONObject json = jArray.getJSONObject(i);
 
-                ss.add(new ABLARoundsSpinnerStore(json.getString("etap_id"), json.getString("etapname")));
+                ss.add(new ABLARoundsSpinnerStore(json.getString("season_id"),json.getString("etapname")));
                 spinner1 = (Spinner) findViewById(R.id.abl_round_spinnersss);
-                // spinner1.setVisibility(View.VISIBLE);
+                spinner1.setVisibility(View.VISIBLE);
                 roundSpinnerAdapter = new ABLRoundSpinnerAdapter(this, ss);
                 spinner1.setAdapter(roundSpinnerAdapter);
-
+//spinner1.setVisibility(View.GONE);
             }
 
         } catch (Exception e) {
@@ -217,34 +227,33 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         switch (position) {
 
             case 0:
-                Fragment frg = getFragmentManager().findFragmentByTag("Rounds");
-                if (frg != null && frg.isVisible()) {
-                    fragmentABLRounds.setQueryParams(seasonIDParam, roundIDParam);
-                    ft.detach(frg);
-                    ft.attach(frg);
-                    ft.commit();
 
-                } else {
-                    Toast.makeText(this, seasonIDParam + "   " + roundIDParam, Toast.LENGTH_LONG).show();
+            //    Toast.makeText(this,abc,Toast.LENGTH_LONG);
+                ft.replace(R.id.mainContnet, fragmentABLRounds);
 
-                    fragmentABLRounds.setQueryParams(seasonIDParam, roundIDParam);
-                    ft.replace(R.id.mainContnet, fragmentABLRounds, "Rounds");
-                    ft.addToBackStack(null);
-                    ft.commit();
-                }
+                // ft.add(R.id.mainContnet, fb);
+                ft.addToBackStack(null);
+                ft.commit();
+
+                //parse json data
+
+
                 break;
             case 1:
-                ft.replace(R.id.mainContnet, fragmentABLResult);
+                ft.replace(R.id.mainContnet, fragmentABLStandings);
+                // ft.add(R.id.mainContnet, fb);
                 ft.addToBackStack(null);
                 ft.commit();
                 break;
             case 2:
-                ft.replace(R.id.mainContnet, fragmentABLStandings);
+                ft.replace(R.id.mainContnet, fragmentABLMvp);
+                // ft.add(R.id.mainContnet, fb);
                 ft.addToBackStack(null);
                 ft.commit();
                 break;
             case 3:
-                ft.replace(R.id.mainContnet, fragmentABLMvp);
+                ft.replace(R.id.mainContnet, fragmentABLResult);
+                // ft.add(R.id.mainContnet, fb);
                 ft.addToBackStack(null);
                 ft.commit();
                 break;

@@ -6,13 +6,7 @@
     <string name="openclose">close</string>
     <string name="open">open</string>
 
-    <string-array name="brew_array">
-        <item>Cappuccino</item>
-        <item>Espresso</item>
-        <item>Mocha</item>
-        <item>Caffè Americano</item>
-        <item>Cafe Zorro</item>
-    </string-array>
+
 
 
 </resources>
