@@ -9,24 +9,6 @@
         android:background="@drawable/bball"
         android:layout_height="match_parent">
 
-        <!--<Spinner-->
-        <!--android:id="@+id/static_spinner"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="20dp"-->
-        <!--android:layout_marginTop="20dp" />-->
-
-        <TextView
-
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Team B"
-            android:layout_gravity="center"
-            android:id="@+id/testtext"
-            android:background="@android:color/holo_red_light"
-            android:textColor="@android:color/white"/>
-
 
     </FrameLayout>
     <LinearLayout
