@@ -135,9 +135,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 //
                 ABLARoundsSpinnerStore item = (ABLARoundsSpinnerStore) parent.getItemAtPosition(position);
-
-                TextView text = (TextView) findViewById(R.id.testtext);
-                text.setText("RoundID:" + item.getRoundID());
                 roundIDParam = item.getRoundID();
 
 
