@@ -8,6 +8,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -41,16 +42,18 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     private ListView listAblaLeft,listAblaMainSeason;
     private ActionBarDrawerToggle drawerListener;
     private ListView resultView;
-    FragmentABLRounds a = new FragmentABLRounds();
-    FragmentABLResult b = new FragmentABLResult();
-    FragmentABLMvp c = new FragmentABLMvp();
+    FragmentABLRounds fragmentABLRounds = new FragmentABLRounds();
+    FragmentABLResult fragmentABLResult = new FragmentABLResult();
+    FragmentABLMvp fragmentABLMvp = new FragmentABLMvp();
     //ABLStoreSeason ablStoreSeason = new ABLStoreSeason();
     FragmentABLStandings fragmentABLStandings = new FragmentABLStandings();
     String abc;
     private JSONArray jArray;
-    Spinner spinner;
+    Spinner spinner,spinner1;
     AnalyzeJson analyzeJson = new AnalyzeJson();
     ABLSeasonAdapter seasonAdapter;
+    ABLRoundSpinnerAdapter roundSpinnerAdapter;
+    ArrayList<ABLARoundsSpinnerStore> ss =  new ArrayList<ABLARoundsSpinnerStore>();
     SpinnerAdapter adapt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +104,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 s.add(new ABLStoreSeason(json.getString("seasonname"), json.getString("id")));
                 spinner = (Spinner) findViewById(R.id.abl_season_spinner);
                 seasonAdapter = new ABLSeasonAdapter(this, s);
-
+//spinner1.setVisibility(View.GONE);
                 spinner.setAdapter(seasonAdapter);
 
             }
@@ -110,6 +113,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             // TODO: handle exception
             Log.e("log_tag", "Error Parsing Data " + e.toString());
         }
+
+
+
+
 
 
 
@@ -131,17 +138,45 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 Spinner mySpinner=(Spinner) findViewById(R.id.abl_season_spinner);
                 ABLStoreSeason item = (ABLStoreSeason) parent.getItemAtPosition(position);
 
-                TextView text = (TextView) findViewById(R.id.lofasz);
-                text.setText(item.getSeasonName());
+                TextView text = (TextView) findViewById(R.id.testtext);
+                text.setText(item.getEtap());
+
+              something(item.getSeasonID());
+                fragmentABLRounds.setQueryParams(item.getSeasonID(), item.getEtap());
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // TODO Auto-generated method stub
+
             }
         });
        // - See more at: http://www.ahotbrew.com/android-dropdown-spinner-example/#sthash.GRQ0x8QK.dpuf
+    }
+
+    public void something(String seasonID){
+        try {
+            roundSpinnerAdapter
+            Toast.makeText(this,seasonID,Toast.LENGTH_LONG).show();
+            String result = analyzeJson.getData("http://abla.ro/androidRoundsQuery.php?seasonid="+seasonID);
+            ArrayList<ABLARoundsSpinnerStore> s =  new ArrayList<ABLARoundsSpinnerStore>();
+            jArray = new JSONArray(result);
+            for (int i = 0; i < jArray.length(); i++) {
+                JSONObject json = jArray.getJSONObject(i);
+
+                ss.add(new ABLARoundsSpinnerStore(json.getString("season_id"),json.getString("etapname")));
+                spinner1 = (Spinner) findViewById(R.id.abl_round_spinnersss);
+                spinner1.setVisibility(View.VISIBLE);
+                roundSpinnerAdapter = new ABLRoundSpinnerAdapter(this, ss);
+                spinner1.setAdapter(roundSpinnerAdapter);
+//spinner1.setVisibility(View.GONE);
+            }
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            Log.e("log_tag", "Error Parsing Data " + e.toString());
+        }
     }
 
     @Override
@@ -188,7 +223,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             case 0:
 
             //    Toast.makeText(this,abc,Toast.LENGTH_LONG);
-                ft.replace(R.id.mainContnet, a);
+                ft.replace(R.id.mainContnet, fragmentABLRounds);
 
                 // ft.add(R.id.mainContnet, fb);
                 ft.addToBackStack(null);
@@ -205,13 +240,13 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 ft.commit();
                 break;
             case 2:
-                ft.replace(R.id.mainContnet, b);
+                ft.replace(R.id.mainContnet, fragmentABLMvp);
                 // ft.add(R.id.mainContnet, fb);
                 ft.addToBackStack(null);
                 ft.commit();
                 break;
             case 3:
-                ft.replace(R.id.mainContnet, c);
+                ft.replace(R.id.mainContnet, fragmentABLResult);
                 // ft.add(R.id.mainContnet, fb);
                 ft.addToBackStack(null);
                 ft.commit();

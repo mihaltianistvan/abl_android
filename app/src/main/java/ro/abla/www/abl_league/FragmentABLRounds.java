@@ -18,21 +18,33 @@ import java.util.ArrayList;
  */
 public class FragmentABLRounds extends Fragment {
     private JSONArray jArray;
+    private String queryParamsSeasonId,getQueryParamsSeasonRound;
+    private String queryParams;
     ListView resultView;
     AnalyzeJson analyzeJson = new AnalyzeJson();
 
-//    public FragmentABLRounds(JSONArray jsonArray) {
-//
-//        this.jArray=jsonArray;
-//    }
+    public FragmentABLRounds() {
 
+    }
+
+    public FragmentABLRounds(String queryParamsSeasonId, String queryParamsSeasonRound) {
+
+
+        setQueryParams(queryParamsSeasonId,queryParamsSeasonRound);
+
+    }
+
+    public void setQueryParams(String queryParamsSeasonId,String getQueryParamsSeasonRound){
+        this.queryParamsSeasonId = queryParamsSeasonId;
+        this.getQueryParamsSeasonRound = getQueryParamsSeasonRound;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View finalView = inflater.inflate(R.layout.abl_rounds_layout,container,false);
 
         try {
-            String result = analyzeJson.getData("http://abla.ro/androidmysql.php"); //getData("http://abla.ro/androidmysql.php");
+            String result = analyzeJson.getData("http://abla.ro/androidmysql.php?seasonID="+queryParamsSeasonId+"&etapID="+getQueryParamsSeasonRound); //getData("http://abla.ro/androidmysql.php");
             ArrayList<ABLARounds> s = new ArrayList<ABLARounds>();
             jArray = new JSONArray(result);
         for(int i=0; i<jArray.length();i++){

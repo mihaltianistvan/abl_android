@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:text="Team B"
             android:layout_gravity="center"
-            android:id="@+id/lofasz"
+            android:id="@+id/testtext"
             android:background="@android:color/holo_red_light"
             android:textColor="@android:color/white"/>
 
@@ -55,6 +55,14 @@
             android:layout_width="240dp"
             android:id="@+id/abl_season_spinner"
 
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_red_light"
+            android:spinnerMode="dropdown" />
+
+        <Spinner
+            android:layout_gravity="left"
+            android:layout_width="240dp"
+            android:id="@+id/abl_round_spinnersss"
             android:layout_height="wrap_content"
             android:background="@android:color/holo_red_light"
             android:spinnerMode="dropdown" />
